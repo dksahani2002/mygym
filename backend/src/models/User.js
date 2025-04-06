@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema(
     height: { type: Number }, // in cm
     weight: { type: Number }, // in kg
     goal: { type: String, enum: ["Weight Loss", "Muscle Gain", "Strength Training", "Maintenance"] },
+    activity_level:{ type: String, enum: ["Low", "Moderate", "High", "Athlete"] },
   },
   { timestamps: true }
 );

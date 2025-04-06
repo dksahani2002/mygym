@@ -23,7 +23,6 @@ exports.getWorkouts = async (req, res) => {
 
 // Update Workout
 exports.updateWorkout = async (req, res) => {
-  console.log("entry :");
   try {
     const workout = await Workout.findById(req.params.id);
     if (!workout) return res.status(404).json({ message: "Workout not found" });
@@ -35,7 +34,6 @@ exports.updateWorkout = async (req, res) => {
     const updatedWorkout = await workout.save();
     res.json(updatedWorkout);
   } catch (error) {
-    console.log("error:",error);
     res.status(500).json({ message: error.message });
   }
 };

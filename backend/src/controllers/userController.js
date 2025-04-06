@@ -25,12 +25,8 @@ exports.updateUserProfile = async (req, res) => {
     }
 
     const updatedUser = await user.save();
-    res.json({ 
-      _id: updatedUser.id, 
-      name: updatedUser.name, 
-      email: updatedUser.email, 
-      token: generateToken(updatedUser.id) 
-    });
+    res.json(updatedUser);
+    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

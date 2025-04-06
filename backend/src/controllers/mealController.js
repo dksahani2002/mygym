@@ -44,7 +44,6 @@ exports.updateMeal = async (req, res) => {
 
     res.json(updatedMeal);
   } catch (error) {
-    console.error("Error updating meal:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -65,7 +64,6 @@ exports.deleteMeal = async (req, res) => {
     await meal.deleteOne(); // Delete the meal
     res.json({ message: "Meal deleted successfully" });
   } catch (error) {
-    console.error("Error deleting meal:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

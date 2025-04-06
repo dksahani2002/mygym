@@ -42,7 +42,6 @@ exports.updateProgress = async (req, res) => {
 
     res.json(updatedProgress);
   } catch (error) {
-    console.error("Error updating progress:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -63,7 +62,6 @@ exports.deleteProgress = async (req, res) => {
     await progress.deleteOne();
     res.json({ message: "Progress entry deleted successfully" });
   } catch (error) {
-    console.error("Error deleting progress:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
