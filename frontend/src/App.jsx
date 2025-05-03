@@ -10,6 +10,8 @@ import Meal from "./pages/Meal";
 import Header from "./components/Header";
 import theme from "./theme";
 import Profile from "./pages/Profile";
+import Workout from "./pages/Workout";
+import Progress from "./pages/Progress";
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -22,6 +24,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/workout" element={<Workout />} />
+          <Route path="/progress" element={<Progress />} />
           <Route path="/meal" element={<Meal />} />
         </Routes>
       </Container>

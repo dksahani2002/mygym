@@ -7,6 +7,18 @@ import {
   removeMeal
 } from '../redux/slices/mealSlice';
 
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Alert,
+  CircularProgress
+} from '@mui/material';
+
 const Meal = () => {
   const dispatch = useDispatch();
   const { meals = [], loading, error } = useSelector((state) => state.meals);
@@ -34,7 +46,6 @@ const Meal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const payload = {
       ...formData,
       calories: Number(formData.calories),
@@ -75,33 +86,119 @@ const Meal = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{editId ? 'Edit Meal' : 'Add Meal'}</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
-        <input type="text" name="foodItem" placeholder="Food Item" value={formData.foodItem} onChange={handleChange} required />
-        <input type="number" name="calories" placeholder="Calories" value={formData.calories} onChange={handleChange} required />
-        <input type="number" name="protein" placeholder="Protein" value={formData.protein} onChange={handleChange} />
-        <input type="number" name="carbs" placeholder="Carbs" value={formData.carbs} onChange={handleChange} />
-        <input type="number" name="fat" placeholder="Fat" value={formData.fat} onChange={handleChange} />
-        <button type="submit">{editId ? 'Update' : 'Add'} Meal</button>
-      </form>
+    <Box sx={{ p: 4, maxWidth: 1000, mx: 'auto' }}>
+      <Typography variant="h4" gutterBottom>
+        {editId ? 'Edit Meal' : 'Add Meal'}
+      </Typography>
 
-      {loading ? (
-        <p>Loading meals...</p>
-      ) : error ? (
-        <p style={{ color: 'red' }}>{error}</p>
-      ) : (
-        meals.map(meal => (
-          <div key={meal._id} style={{ marginBottom: '1rem' }}>
-            <strong>{meal.foodItem}</strong> - {meal.calories} cal | Protein: {meal.protein}g | Carbs: {meal.carbs}g | Fat: {meal.fat}g
-            <div>
-              <button onClick={() => handleEdit(meal)}>Edit</button>
-              <button onClick={() => handleDelete(meal._id)} style={{ marginLeft: '1rem' }}>Delete</button>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
+      <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4 }}>
+        <Grid container spacing={2}>
+          <Grid item>
+            <TextField
+              name="foodItem"
+              label="Food Item"
+              required
+              value={formData.foodItem}
+              onChange={handleChange}
+              sx={{ minWidth: 180 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <TextField
+              name="calories"
+              label="Calories"
+              type="number"
+              required
+              value={formData.calories}
+              onChange={handleChange}
+              sx={{ minWidth: 120 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <TextField
+              name="protein"
+              label="Protein (g)"
+              type="number"
+              value={formData.protein}
+              onChange={handleChange}
+              sx={{ minWidth: 120 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <TextField
+              name="carbs"
+              label="Carbs (g)"
+              type="number"
+              value={formData.carbs}
+              onChange={handleChange}
+              sx={{ minWidth: 120 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <TextField
+              name="fat"
+              label="Fat (g)"
+              type="number"
+              value={formData.fat}
+              onChange={handleChange}
+              sx={{ minWidth: 120 }}
+            />
+          </Grid>
+
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+              color={editId ? 'warning' : 'primary'}
+              sx={{ height: '100%' }}
+            >
+              {editId ? 'Update' : 'Add'}
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {loading && <CircularProgress sx={{ display: 'block', my: 2 }} />}
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+
+      <Typography variant="h5" sx={{ mb: 2 }}>Meals</Typography>
+
+      <Grid container spacing={3}>
+        {meals.map(meal => (
+          <Grid item key={meal._id}>
+            <Card variant="outlined" sx={{ p: 2, minWidth: 250 }}>
+              <CardContent>
+                <Typography variant="h6">{meal.foodItem}</Typography>
+                <Typography>Calories: {meal.calories} cal</Typography>
+                <Typography>Protein: {meal.protein}g | Carbs: {meal.carbs}g | Fat: {meal.fat}g</Typography>
+                <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
+                  <Button
+                    variant="outlined"
+                    color="warning"
+                    size="small"
+                    onClick={() => handleEdit(meal)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => handleDelete(meal._id)}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

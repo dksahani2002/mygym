@@ -20,6 +20,8 @@ export default function Header() {
           <>
             <Button color="inherit" component={Link} to="/profile">Profile</Button>
             <Button color="inherit" component={Link} to="/meal">Meal</Button>
+            <Button color="inherit" component={Link} to="/workout">Workout</Button>
+            <Button color="inherit" component={Link} to="/progress">Progress</Button>
             <Button color="inherit" component={Link} to="/logout">Logout</Button>
           </>
         )}

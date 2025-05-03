@@ -1,15 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api';
-import Cookies from 'js-cookie';
 
 // Async thunks
-
 export const fetchMeals = createAsyncThunk('meals/fetchMeals', async (_, { rejectWithValue }) => {
   try {
-    const token = Cookies.get('token');
-    const res = await api.get('/meal', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const res = await api.get('/meal');
     return res.data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -18,10 +13,7 @@ export const fetchMeals = createAsyncThunk('meals/fetchMeals', async (_, { rejec
 
 export const addMeal = createAsyncThunk('meals/addMeal', async (mealData, { rejectWithValue }) => {
   try {
-    const token = Cookies.get('token');
-    const res = await api.post('/meal/log', mealData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const res = await api.post('/meal/log', mealData );
     return res.data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -30,11 +22,8 @@ export const addMeal = createAsyncThunk('meals/addMeal', async (mealData, { reje
 
 export const editMeal = createAsyncThunk('meals/editMeal', async (mealData, { rejectWithValue }) => {
   try {
-    const token = Cookies.get('token');
     const { _id, ...updateData } = mealData;
-    const res = await api.put(`/meal/${_id}`, updateData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const res = await api.put(`/meal/${_id}`, updateData );
     return res.data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -43,10 +32,7 @@ export const editMeal = createAsyncThunk('meals/editMeal', async (mealData, { re
 
 export const removeMeal = createAsyncThunk('meals/removeMeal', async (mealId, { rejectWithValue }) => {
   try {
-    const token = Cookies.get('token');
-    await api.delete(`/meal/${mealId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    await api.delete(`/meal/${mealId}`);
     return mealId;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);

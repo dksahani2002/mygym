@@ -1,23 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api';
-import Cookies from 'js-cookie';
 
 // Fetch profile async action
 export const fetchProfile = createAsyncThunk('profile/fetch', async (_, thunkAPI) => {
-  const token = Cookies.get('token');
-  const res = await api.get('/user/profile', {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await api.get('/user/profile');
   
   return res.data;
 });
 
 // Save profile async action
 export const saveProfile = createAsyncThunk('profile/save', async (profileData, thunkAPI) => {
-  const token = Cookies.get('token');
-  const res = await api.put('/user/profile', profileData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await api.put('/user/profile', profileData);
   return res.data;
 });
 

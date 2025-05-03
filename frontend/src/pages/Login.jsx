@@ -1,3 +1,4 @@
+// pages/Login.jsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/slices/authSlice';
@@ -8,10 +9,10 @@ import {
   Button,
   TextField,
   Typography,
-  Paper
+  Card,
+  CardContent,
+  Alert
 } from '@mui/material';
-
-import loginStyles from '../styles/LoginStyles';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -27,58 +28,65 @@ export default function Login() {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
 
   return (
-    <Box style={loginStyles.root}>
-      <Paper elevation={3} style={loginStyles.paper}>
-        <Typography variant="h5" style={loginStyles.title}>
-          Login
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            margin="dense"
-            size="small"
-            type="email"
-            required
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            margin="dense"
-            size="small"
-            type="password"
-            required
-          />
-          {error && (
-            <Typography color="error" variant="body2" style={{ marginTop: 8 }}>
-              {error}
-            </Typography>
-          )}
-          <Button type="submit" fullWidth variant="contained" style={loginStyles.submitButton}>
-            Login
-          </Button>
-        </form>
+    <Box sx={{ p: 4, maxWidth: 400, mx: 'auto' }}>
+      <Typography variant="h4" gutterBottom align="center">
+        Login
+      </Typography>
 
-        {/* 👇 Register redirect link */}
-        <Box style={{ marginTop: 16 }}>
-          <Typography variant="body2" align="center">
-            Don&apos;t have an account?{' '}
-            <Link to="/register" style={{ textDecoration: 'none', color: '#1976d2' }}>
-              Register
-            </Link>
-          </Typography>
-        </Box>
-      </Paper>
+      <Card variant="outlined">
+        <CardContent>
+          <Box component="form" onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              margin="normal"
+              type="email"
+              required
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              margin="normal"
+              type="password"
+              required
+            />
+
+            {error && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {error}
+              </Alert>
+            )}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3 }}
+            >
+              Login
+            </Button>
+          </Box>
+
+          <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Typography variant="body2">
+              Don&apos;t have an account?{' '}
+              <Link to="/register" style={{ textDecoration: 'none', color: '#1976d2' }}>
+                Register
+              </Link>
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
     </Box>
   );
 }

@@ -1,27 +1,32 @@
 // pages/Dashboard.jsx
 import React from 'react';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Card, CardContent } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 export default function Dashboard() {
   const { user } = useSelector((state) => state.auth);
+
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h5" gutterBottom>
-        Welcome to your Dashboard
+    <Box sx={{ p: 4, maxWidth: 600, mx: 'auto' }}>
+      <Typography variant="h4" gutterBottom>
+        Welcome to Your Dashboard
       </Typography>
 
-      {user ? (
-        <>
-          <Typography variant="subtitle1">Name: {user.name}</Typography>
-          <Typography variant="subtitle1">Email: {user.email}</Typography>
-          <Typography variant="subtitle1">Age: {user.age}</Typography>
-          <Typography variant="subtitle1">Gender: {user.gender}</Typography>
-          <Typography variant="subtitle1">Goal: {user.goal}</Typography>
-        </>
-      ) : (
-        <Typography variant="body1">User data not available.</Typography>
-      )}
+      <Card variant="outlined">
+        <CardContent>
+          {user ? (
+            <>
+              <Typography variant="h6">Name: {user.name}</Typography>
+              <Typography variant="h6">Email: {user.email}</Typography>
+              <Typography variant="body1">Age: {user.age}</Typography>
+              <Typography variant="body1">Gender: {user.gender}</Typography>
+              <Typography variant="body1">Goal: {user.goal}</Typography>
+            </>
+          ) : (
+            <Typography variant="body1">User data not available.</Typography>
+          )}
+        </CardContent>
+      </Card>
     </Box>
   );
 }
